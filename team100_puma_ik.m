@@ -74,19 +74,29 @@ end
 % code calling this function can tell that something is wrong and shut
 % down the PUMA.
 
+%convert ZYZ euler angles to rotation matrix
 Rz = @(x) [cos(x) -sin(x) 0; sin(x) cos(x) 0; 0 0 1];
 Ry = @(x) [cos(x) 0 sin(x); 0 1 0; -sin(x) 0 cos(x)];
 R06 = Rz(psi)*Ry(theta)*Rz(phi);
 
+%define link lengths
+a = 13.0;
+b = 2.5;
+c = 8.0;
+d = 2.5;
+e = 8.0;
+f = 2.5;
 
-d6 = 2.5;
+%calculate wrist center position
+xc = x - f*R06(1,3);
+yc = y - f*R06(2,3);
+zc = z - f*R06(3,3);
 
-xc = x - d6*R06(1,3);
-yc = y - d6*R06(2,3);
-zc = z - d6*R06(3,3);
+%calculate theta1
+r = sqrt(xc^2 + yc^2);
+theta1 = atan2(yc, xc) + atan2(sqrt(r^2 - (b+d)^2), b+d) - pi/2;
 
-
-th1 = [NaN 0];
+th1 = [theta1 0];
 th2 = [NaN 0];
 th3 = [NaN 0];
 th4 = [NaN 0];
