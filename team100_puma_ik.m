@@ -73,6 +73,19 @@ end
 % workspace.  We use this sentinel value of NaN to be sure that the
 % code calling this function can tell that something is wrong and shut
 % down the PUMA.
+
+Rz = @(x) [cos(x) -sin(x) 0; sin(x) cos(x) 0; 0 0 1];
+Ry = @(x) [cos(x) 0 sin(x); 0 1 0; -sin(x) 0 cos(x)];
+R06 = Rz(psi)*Ry(theta)*Rz(phi);
+
+
+d6 = 2.5;
+
+xc = x - d6*R06(1,3);
+yc = y - d6*R06(2,3);
+zc = z - d6*R06(3,3);
+
+
 th1 = [NaN 0];
 th2 = [NaN 0];
 th3 = [NaN 0];
