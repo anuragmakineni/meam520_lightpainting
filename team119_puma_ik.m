@@ -1,5 +1,5 @@
-function thetas = team100_puma_ik(x, y, z, phi, theta, psi)
-%% team100_puma_ik.m
+function thetas = team119_puma_ik(x, y, z, phi, theta, psi)
+%% team119_puma_ik.m
 %
 % Calculates the full inverse kinematics for the PUMA 260.
 %

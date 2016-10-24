@@ -22,7 +22,7 @@ home
 % handle, so that we can call the function indirectly.  We do this so
 % that you can quickly change the IK function that you want to test,
 % without having to change it in many places down below in the code.
-puma_ik = @team100_puma_ik;
+puma_ik = @team119_puma_ik;
 disp(['Testing function ' func2str(puma_ik) '.m'])
 
 

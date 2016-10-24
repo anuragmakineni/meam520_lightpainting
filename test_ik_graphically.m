@@ -158,7 +158,7 @@ for i = 1:length(ox_history)
     % Send the desired pose into the inverse kinematics to obtain the
     % joint angles that will place the PUMA's end-effector at this
     % position and orientation relative to frame 0.
-    thetas = team100_puma_ik(ox, oy, oz, phi, theta, psi);
+    thetas = team119_puma_ik(ox, oy, oz, phi, theta, psi);
     
     % For each of the columns in thetas.
     s = size(thetas);
