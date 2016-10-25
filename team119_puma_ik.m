@@ -77,7 +77,7 @@ end
 %convert ZYZ euler angles to rotation matrix
 Rz = @(x) [cos(x) -sin(x) 0; sin(x) cos(x) 0; 0 0 1];
 Ry = @(x) [cos(x) 0 sin(x); 0 1 0; -sin(x) 0 cos(x)];
-R06 = Rz(psi)*Ry(theta)*Rz(phi);
+R06 = Rz(phi)*Ry(theta)*Rz(psi);
 
 %define link lengths
 a = 13.0;
@@ -110,14 +110,33 @@ theta3_elbow_down = theta3_shv_elbow_down - pi/2;
 theta2_elbow_up = atan2(s,R) - atan2(sin(theta3_shv_elbow_up)*e,c + e*cos(theta3_shv_elbow_up));
 theta2_elbow_down = atan2(s,R) - atan2(sin(theta3_shv_elbow_down)*e,c + e*cos(theta3_shv_elbow_down));
 
-%output thetas
+%calculate rotation matrix for theta 1-3 for elbow up and down
+R_0_3_elbow_up = puma_t60_kuchenbe(theta1, theta2_elbow_up, theta3_elbow_up, 0, 0, 0);
+R_0_3_elbow_up = R_0_3_elbow_up([1 2 3],[1, 2, 3]);
 
-th1 = [theta1 theta1];
-th2 = [theta2_elbow_up theta2_elbow_down];
-th3 = [theta3_elbow_up theta3_elbow_down];
-th4 = [NaN 0];
-th5 = [NaN 0];
-th6 = [NaN 0];
+R_0_3_elbow_down = puma_t60_kuchenbe(theta1, theta2_elbow_down, theta3_elbow_down, 0, 0, 0);
+R_0_3_elbow_down = R_0_3_elbow_down([1 2 3],[1, 2, 3]);
+
+%calculate 4-6 rotation
+R_4_6_elbow_up = R_0_3_elbow_up' * R06;
+R_4_6_elbow_down = R_0_3_elbow_down' * R06;
+
+%decompose into euler angles
+theta_up_1 = acos(R_4_6_elbow_up(3,3));
+psi_up_1 = -atan2(R_4_6_elbow_up(3,2), R_4_6_elbow_up(3,1));
+phi_up_1 = atan2(R_4_6_elbow_up(2,3), R_4_6_elbow_up(1,3));
+
+theta_down_1 = acos(R_4_6_elbow_down(3,3));
+psi_down_1 = -atan2(R_4_6_elbow_down(3,2), R_4_6_elbow_down(3,1));
+phi_down_1 = atan2(R_4_6_elbow_down(2,3), R_4_6_elbow_down(1,3));
+
+%output thetas
+th1 = [theta1, theta1];
+th2 = [theta2_elbow_up, theta2_elbow_down];
+th3 = [theta3_elbow_up, theta3_elbow_down];
+th4 = [phi_up_1 , phi_down_1];
+th5 = [-theta_up_1 -theta_down_1];
+th6 = [psi_up_1 + pi, psi_down_1 + pi];
 
 % You should update this section of the code with your IK solution.
 % Please comment your code to explain what you are doing at each step.
