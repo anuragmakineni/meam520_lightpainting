@@ -92,13 +92,29 @@ xc = x - f*R06(1,3);
 yc = y - f*R06(2,3);
 zc = z - f*R06(3,3);
 
-%calculate theta1
+%calculate theta1 (left arm)
 r = sqrt(xc^2 + yc^2);
 theta1 = atan2(yc, xc) + atan2(sqrt(r^2 - (b+d)^2), b+d) - pi/2;
 
-th1 = [theta1 0];
-th2 = [NaN 0];
-th3 = [NaN 0];
+%calculate theta3
+s = zc - a;
+R = sqrt(xc^2 + yc^2 - (b+d)^2);
+D = (R^2 + s^2 - c^2 - e^2)/(2*c*e);
+theta3_shv_elbow_up = atan2(sqrt(1-D^2), D);
+theta3_elbow_up = theta3_shv_elbow_up - pi/2;
+
+theta3_shv_elbow_down = atan2(-sqrt(1-D^2), D);
+theta3_elbow_down = theta3_shv_elbow_down - pi/2;
+
+%calculate theta2
+theta2_elbow_up = atan2(s,R) - atan2(sin(theta3_shv_elbow_up)*e,c + e*cos(theta3_shv_elbow_up));
+theta2_elbow_down = atan2(s,R) - atan2(sin(theta3_shv_elbow_down)*e,c + e*cos(theta3_shv_elbow_down));
+
+%output thetas
+
+th1 = [theta1 theta1];
+th2 = [theta2_elbow_up theta2_elbow_down];
+th3 = [theta3_elbow_up theta3_elbow_down];
 th4 = [NaN 0];
 th5 = [NaN 0];
 th6 = [NaN 0];

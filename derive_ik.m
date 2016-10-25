@@ -13,9 +13,8 @@ c = 8.0;
 d = 2.5;
 e = 8.0;
 f = 2.5;
-t1 = 0.0;
 
-T4_0 = eval(T4_0)
+T4_0 = eval(T4_0);
 
 x = simplify(T4_0(13))
 y = simplify(T4_0(14))
