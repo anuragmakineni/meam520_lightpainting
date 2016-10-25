@@ -98,9 +98,12 @@ s = zc - a;
 R = sqrt(xc^2 + yc^2 - (b+d)^2);
 D = (R^2 + s^2 - c^2 - e^2)/(2*c*e);
 
+%if any of these terms are imaginary, we can't solve for ik
 if isreal(R) && isreal(sqrt(1-D^2)) && isreal(sqrt((r^2 - (b+d)^2)))
+    %calculate theta1
     theta1 = atan2(yc, xc) + atan2(sqrt(r^2 - (b+d)^2), b+d) - pi/2;
 
+    %calculate both theta3 possibilities
     theta3_shv_elbow_up = atan2(sqrt(1-D^2), D);
     theta3_elbow_up = theta3_shv_elbow_up - pi/2;
 
@@ -146,6 +149,13 @@ if isreal(R) && isreal(sqrt(1-D^2)) && isreal(sqrt((r^2 - (b+d)^2)))
     th4 = [phi_up_1, phi_up_2, phi_down_1, phi_down_2];
     th5 = [-theta_up_1, -theta_up_2, -theta_down_1, -theta_down_2];
     th6 = [psi_up_1, psi_up_2, psi_down_1, psi_down_2];
+    
+    % check if zero pose and return 2 distinct euler angle solutions
+    if isequal(R06,eye(3)) && isequal([x, y, z],[c, b+d, a+c+f])
+        th4 = [0 pi phi_down_1, phi_down_2];
+        th5 = [0 0 -theta_down_1, -theta_down_2];
+        th6 = [0 -pi psi_down_1, psi_down_2];
+    end
 else
     th1 = [NaN];
     th2 = [NaN];
@@ -154,18 +164,6 @@ else
     th5 = [NaN];
     th6 = [NaN];
 end
-
-
-
-
-
-% You should update this section of the code with your IK solution.
-% Please comment your code to explain what you are doing at each step.
-% Feel free to create additional functions as needed - please name
-% them all to start with team1XX_, where 1XX is your team number.  For
-% example, it probably makes sense to handle inverse position
-% kinematics and inverse orientation kinematics separately.
-
 
 %% FORMAT OUTPUT
 

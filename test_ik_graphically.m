@@ -22,7 +22,7 @@ GraphingTimeDelay = 0.1; % The length of time that Matlab should pause between p
 %% CHOOSE INPUT PARAMETERS
 
 % Set the test type.
-testType = 4;
+testType = 1;
 
 switch(testType)
 
@@ -31,9 +31,9 @@ switch(testType)
         % One position and orientation that you can manually modify.
 
         % Define the configuration.
-        ox_history = 10.5; % inches
+        ox_history = 8.0; % inches
         oy_history = 5; % inches
-        oz_history = 21; % inches
+        oz_history = 23.5; % inches
         phi_history = 0; % radians
         theta_history = 0; % radians
         psi_history = 0; % radians
@@ -77,7 +77,7 @@ switch(testType)
         radius = 4; % inches
         
         % Define the x-value for the plane that contains the circle.
-        x_offset = 7; % inches
+        x_offset = 8; % inches
         
         % Define the y and z coordinates for the center of the circle.
         y_center = 4; % inches
