@@ -123,20 +123,28 @@ R_4_6_elbow_down = R_0_3_elbow_down' * R06;
 
 %decompose into euler angles
 theta_up_1 = acos(R_4_6_elbow_up(3,3));
-psi_up_1 = -atan2(R_4_6_elbow_up(3,2), R_4_6_elbow_up(3,1));
+psi_up_1 = atan2(R_4_6_elbow_up(3,2), -R_4_6_elbow_up(3,1));
 phi_up_1 = atan2(R_4_6_elbow_up(2,3), R_4_6_elbow_up(1,3));
 
+theta_up_2 = -acos(R_4_6_elbow_up(3,3));
+psi_up_2 = atan2(-R_4_6_elbow_up(3,2), R_4_6_elbow_up(3,1));
+phi_up_2 = atan2(-R_4_6_elbow_up(2,3), -R_4_6_elbow_up(1,3));
+
 theta_down_1 = acos(R_4_6_elbow_down(3,3));
-psi_down_1 = -atan2(R_4_6_elbow_down(3,2), R_4_6_elbow_down(3,1));
+psi_down_1 = atan2(R_4_6_elbow_down(3,2), -R_4_6_elbow_down(3,1));
 phi_down_1 = atan2(R_4_6_elbow_down(2,3), R_4_6_elbow_down(1,3));
 
+theta_down_2 = -acos(R_4_6_elbow_down(3,3));
+psi_down_2 = atan2(-R_4_6_elbow_down(3,2), R_4_6_elbow_down(3,1));
+phi_down_2 = atan2(-R_4_6_elbow_down(2,3), -R_4_6_elbow_down(1,3));
+
 %output thetas
-th1 = [theta1, theta1];
-th2 = [theta2_elbow_up, theta2_elbow_down];
-th3 = [theta3_elbow_up, theta3_elbow_down];
-th4 = [phi_up_1 , phi_down_1];
-th5 = [-theta_up_1 -theta_down_1];
-th6 = [psi_up_1 + pi, psi_down_1 + pi];
+th1 = [theta1, theta1, theta1, theta1];
+th2 = [theta2_elbow_up, theta2_elbow_up, theta2_elbow_down, theta2_elbow_down];
+th3 = [theta3_elbow_up, theta3_elbow_up, theta3_elbow_down, theta3_elbow_down];
+th4 = [phi_up_1, phi_up_2, phi_down_1, phi_down_2];
+th5 = [-theta_up_1, -theta_up_2, -theta_down_1, -theta_down_2];
+th6 = [psi_up_1, psi_up_2, psi_down_1, psi_down_2];
 
 % You should update this section of the code with your IK solution.
 % Please comment your code to explain what you are doing at each step.
