@@ -92,59 +92,72 @@ xc = x - f*R06(1,3);
 yc = y - f*R06(2,3);
 zc = z - f*R06(3,3);
 
-%calculate theta1 (left arm)
+%calculate parameters for ik
 r = sqrt(xc^2 + yc^2);
-theta1 = atan2(yc, xc) + atan2(sqrt(r^2 - (b+d)^2), b+d) - pi/2;
-
-%calculate theta3
 s = zc - a;
 R = sqrt(xc^2 + yc^2 - (b+d)^2);
 D = (R^2 + s^2 - c^2 - e^2)/(2*c*e);
-theta3_shv_elbow_up = atan2(sqrt(1-D^2), D);
-theta3_elbow_up = theta3_shv_elbow_up - pi/2;
 
-theta3_shv_elbow_down = atan2(-sqrt(1-D^2), D);
-theta3_elbow_down = theta3_shv_elbow_down - pi/2;
+if isreal(R) && isreal(sqrt(1-D^2)) && isreal(sqrt((r^2 - (b+d)^2)))
+    theta1 = atan2(yc, xc) + atan2(sqrt(r^2 - (b+d)^2), b+d) - pi/2;
 
-%calculate theta2
-theta2_elbow_up = atan2(s,R) - atan2(sin(theta3_shv_elbow_up)*e,c + e*cos(theta3_shv_elbow_up));
-theta2_elbow_down = atan2(s,R) - atan2(sin(theta3_shv_elbow_down)*e,c + e*cos(theta3_shv_elbow_down));
+    theta3_shv_elbow_up = atan2(sqrt(1-D^2), D);
+    theta3_elbow_up = theta3_shv_elbow_up - pi/2;
 
-%calculate rotation matrix for theta 1-3 for elbow up and down
-R_0_3_elbow_up = puma_t60_kuchenbe(theta1, theta2_elbow_up, theta3_elbow_up, 0, 0, 0);
-R_0_3_elbow_up = R_0_3_elbow_up([1 2 3],[1, 2, 3]);
+    theta3_shv_elbow_down = atan2(-sqrt(1-D^2), D);
+    theta3_elbow_down = theta3_shv_elbow_down - pi/2;
+    
+    %calculate theta2
+    theta2_elbow_up = atan2(s,R) - atan2(sin(theta3_shv_elbow_up)*e,c + e*cos(theta3_shv_elbow_up));
+    theta2_elbow_down = atan2(s,R) - atan2(sin(theta3_shv_elbow_down)*e,c + e*cos(theta3_shv_elbow_down));
 
-R_0_3_elbow_down = puma_t60_kuchenbe(theta1, theta2_elbow_down, theta3_elbow_down, 0, 0, 0);
-R_0_3_elbow_down = R_0_3_elbow_down([1 2 3],[1, 2, 3]);
+    %calculate rotation matrix for theta 1-3 for elbow up and down
+    R_0_3_elbow_up = puma_t60_kuchenbe(theta1, theta2_elbow_up, theta3_elbow_up, 0, 0, 0);
+    R_0_3_elbow_up = R_0_3_elbow_up([1 2 3],[1, 2, 3]);
 
-%calculate 4-6 rotation
-R_4_6_elbow_up = R_0_3_elbow_up' * R06;
-R_4_6_elbow_down = R_0_3_elbow_down' * R06;
+    R_0_3_elbow_down = puma_t60_kuchenbe(theta1, theta2_elbow_down, theta3_elbow_down, 0, 0, 0);
+    R_0_3_elbow_down = R_0_3_elbow_down([1 2 3],[1, 2, 3]);
 
-%decompose into euler angles
-theta_up_1 = acos(R_4_6_elbow_up(3,3));
-psi_up_1 = atan2(R_4_6_elbow_up(3,2), -R_4_6_elbow_up(3,1));
-phi_up_1 = atan2(R_4_6_elbow_up(2,3), R_4_6_elbow_up(1,3));
+    %calculate 4-6 rotation
+    R_4_6_elbow_up = R_0_3_elbow_up' * R06;
+    R_4_6_elbow_down = R_0_3_elbow_down' * R06;
 
-theta_up_2 = -acos(R_4_6_elbow_up(3,3));
-psi_up_2 = atan2(-R_4_6_elbow_up(3,2), R_4_6_elbow_up(3,1));
-phi_up_2 = atan2(-R_4_6_elbow_up(2,3), -R_4_6_elbow_up(1,3));
+    %decompose into euler angles
+    theta_up_1 = acos(R_4_6_elbow_up(3,3));
+    psi_up_1 = atan2(R_4_6_elbow_up(3,2), -R_4_6_elbow_up(3,1));
+    phi_up_1 = atan2(R_4_6_elbow_up(2,3), R_4_6_elbow_up(1,3));
 
-theta_down_1 = acos(R_4_6_elbow_down(3,3));
-psi_down_1 = atan2(R_4_6_elbow_down(3,2), -R_4_6_elbow_down(3,1));
-phi_down_1 = atan2(R_4_6_elbow_down(2,3), R_4_6_elbow_down(1,3));
+    theta_up_2 = -acos(R_4_6_elbow_up(3,3));
+    psi_up_2 = atan2(-R_4_6_elbow_up(3,2), R_4_6_elbow_up(3,1));
+    phi_up_2 = atan2(-R_4_6_elbow_up(2,3), -R_4_6_elbow_up(1,3));
 
-theta_down_2 = -acos(R_4_6_elbow_down(3,3));
-psi_down_2 = atan2(-R_4_6_elbow_down(3,2), R_4_6_elbow_down(3,1));
-phi_down_2 = atan2(-R_4_6_elbow_down(2,3), -R_4_6_elbow_down(1,3));
+    theta_down_1 = acos(R_4_6_elbow_down(3,3));
+    psi_down_1 = atan2(R_4_6_elbow_down(3,2), -R_4_6_elbow_down(3,1));
+    phi_down_1 = atan2(R_4_6_elbow_down(2,3), R_4_6_elbow_down(1,3));
 
-%output thetas
-th1 = [theta1, theta1, theta1, theta1];
-th2 = [theta2_elbow_up, theta2_elbow_up, theta2_elbow_down, theta2_elbow_down];
-th3 = [theta3_elbow_up, theta3_elbow_up, theta3_elbow_down, theta3_elbow_down];
-th4 = [phi_up_1, phi_up_2, phi_down_1, phi_down_2];
-th5 = [-theta_up_1, -theta_up_2, -theta_down_1, -theta_down_2];
-th6 = [psi_up_1, psi_up_2, psi_down_1, psi_down_2];
+    theta_down_2 = -acos(R_4_6_elbow_down(3,3));
+    psi_down_2 = atan2(-R_4_6_elbow_down(3,2), R_4_6_elbow_down(3,1));
+    phi_down_2 = atan2(-R_4_6_elbow_down(2,3), -R_4_6_elbow_down(1,3));
+    
+    %output thetas
+    th1 = [theta1, theta1, theta1, theta1];
+    th2 = [theta2_elbow_up, theta2_elbow_up, theta2_elbow_down, theta2_elbow_down];
+    th3 = [theta3_elbow_up, theta3_elbow_up, theta3_elbow_down, theta3_elbow_down];
+    th4 = [phi_up_1, phi_up_2, phi_down_1, phi_down_2];
+    th5 = [-theta_up_1, -theta_up_2, -theta_down_1, -theta_down_2];
+    th6 = [psi_up_1, psi_up_2, psi_down_1, psi_down_2];
+else
+    th1 = [NaN];
+    th2 = [NaN];
+    th3 = [NaN];
+    th4 = [NaN];
+    th5 = [NaN];
+    th6 = [NaN];
+end
+
+
+
+
 
 % You should update this section of the code with your IK solution.
 % Please comment your code to explain what you are doing at each step.
