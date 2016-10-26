@@ -22,7 +22,7 @@ GraphingTimeDelay = 0.1; % The length of time that Matlab should pause between p
 %% CHOOSE INPUT PARAMETERS
 
 % Set the test type.
-testType = 1;
+testType = 4;
 
 switch(testType)
 
