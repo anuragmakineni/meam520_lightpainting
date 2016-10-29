@@ -52,4 +52,70 @@ function thetas = team119_choose_solution(allSolutions, thetasnow)
 % angle plus or minus 2*pi*n). Be careful about this point.
 
 % For now, just return the last column of allSolutions.
-thetas = allSolutions(:,end);
+
+sol1 = true;
+sol2 = true;
+sol3 = true;
+sol4 = true;
+
+
+if (allSolutions(1) > (110*pi/180) || allSolutions(1) < (-180*pi/180))
+    sol1 = false;
+elseif (allSolutions(2) > (240*pi/180) || allSolutions(2) < (-75*pi/180))
+    sol1 = false;
+elseif (allSolutions(3) > (60*pi/180) || allSolutions(3) < (-235*pi/180))
+    sol1 = false;
+elseif (allSolutions(4) > (40*pi/180) || allSolutions(4) < (-580*pi/180))
+    sol1 = false;
+elseif (allSolutions(5) > (110*pi/180) || allSolutions(5) < (-120*pi/180))
+    sol1 = false;
+elseif (allSolutions(6) > (295*pi/180) || allSolutions(6) < (-215*pi/180))
+    sol1 = false;
+elseif (allSolutions(7) > (110*pi/180) || allSolutions(7) < (-180*pi/180))
+    sol2 = false;
+elseif (allSolutions(8) > (240*pi/180) || allSolutions(8) < (-75*pi/180))
+    sol2 = false;
+elseif (allSolutions(9) > (60*pi/180) || allSolutions(9) < (-235*pi/180))
+    sol2 = false;
+elseif (allSolutions(10) > (40*pi/180) || allSolutions(10) < (-580*pi/180))
+    sol2 = false;
+elseif (allSolutions(11) > (110*pi/180) || allSolutions(11) < (-120*pi/180))
+    sol2 = false;
+elseif (allSolutions(12) > (295*pi/180) || allSolutions(12) < (-215*pi/180))
+    sol2 = false;
+elseif (allSolutions(13) > (110*pi/180) || allSolutions(13) < (-180*pi/180))
+    sol3 = false;
+elseif (allSolutions(14) > (240*pi/180) || allSolutions(14) < (-75*pi/180))
+    sol3 = false;
+elseif (allSolutions(15) > (60*pi/180) || allSolutions(15) < (-235*pi/180))
+    sol3 = false;
+elseif (allSolutions(16) > (40*pi/180) || allSolutions(16) < (-580*pi/180))
+    sol3 = false;
+elseif (allSolutions(17) > (110*pi/180) || allSolutions(17) < (-120*pi/180))
+    sol3 = false;
+elseif (allSolutions(18) > (295*pi/180) || allSolutions(18) < (-215*pi/180))
+    sol3 = false;
+elseif (allSolutions(19) > (110*pi/180) || allSolutions(19) < (-180*pi/180))
+    sol4 = false;
+elseif (allSolutions(20) > (240*pi/180) || allSolutions(20) < (-75*pi/180))
+    sol4 = false;
+elseif (allSolutions(21) > (60*pi/180) || allSolutions(21) < (-235*pi/180))
+    sol4 = false;
+elseif (allSolutions(22) > (40*pi/180) || allSolutions(22) < (-580*pi/180))
+    sol4 = false;
+elseif (allSolutions(23) > (110*pi/180) || allSolutions(23) < (-120*pi/180))
+    sol4 = false;
+elseif (allSolutions(24) > (295*pi/180) || allSolutions(24) < (-215*pi/180))
+    sol4 = false;        
+end
+
+
+if (sol4 == true)
+thetas = allSolutions(:,4);
+elseif (sol3 == true)
+thetas = allSolutions(:,3);
+elseif (sol2 == true)
+thetas = allSolutions(:,2);
+else
+thetas = allSolutions(:,1);
+end
