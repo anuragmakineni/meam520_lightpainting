@@ -23,7 +23,7 @@ home
 teamnumber = 100;
 
 % Define student names.
-studentnames = 'First Name, Second Name, and Third Name';
+studentnames = 'Anurag Makineni, Dhruv Baid, Heng-Chieh Hsu';
 
 % Initialize the function that calculates positions, orientations, and
 % colors by calling it once with no arguments.  It returns the

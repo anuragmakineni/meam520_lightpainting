@@ -18,7 +18,7 @@ clc
 % Set whether to animate the robot's movement and how much to slow it
 % down.
 pause on;  % Set this to off if you don't want to watch the animation.
-GraphingTimeDelay = 0.05; % The length of time that Matlab should pause between positions when graphing, if at all, in seconds.
+GraphingTimeDelay = 0.001; % The length of time that Matlab should pause between positions when graphing, if at all, in seconds.
 
 
 %% CREATE JOINT ANGLE SEQUENCE

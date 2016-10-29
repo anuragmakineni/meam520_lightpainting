@@ -96,7 +96,7 @@ if (nargin == 0)
     distances = sqrt((diff(xvia)).^2 + (diff(yvia)).^2 + (diff(zvia)).^2);
     
     % Define the speed the tip should move in inches per second.
-    tipspeed = 2;
+    tipspeed = 2.25;
     
     % Calculate durations for travel between neighboring via points,
     % assuming linear interpolation, in seconds.
